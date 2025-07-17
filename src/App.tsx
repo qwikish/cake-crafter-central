@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import CheckoutPage from "./pages/CheckoutPage";
 import AdminAuthPage from "./pages/AdminAuthPage";
+import CakePage from "./pages/CakePage";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/cakes" element={<CakesPage />} />
+          <Route path="/cakes/:id" element={<CakePage />} />
           <Route path="/custom" element={<CustomOrdersPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

@@ -13,7 +13,11 @@ export interface Cake {
   inStock: boolean;
   deliveryTime: string;
   rating: number;
-  reviews: number;
+  reviews: Review[];
+  deliveryInfo?: string;
+  ingredients?: string[];
+  createdAt: string;
+
 }
 
 export interface Order {
@@ -80,27 +84,27 @@ export interface Coupon {
   description: string;
 }
 
-enum categoriesEnum {
-  'Birthday',
-  'Wedding',
-  'Anniversary',
-  'Special Occasion'
+export enum categoriesEnum {
+  BIRTHDAY = "Birthday",
+  WEDDING = "Wedding",
+  ANNIVERSARY = "Anniversary",
+  CUSTOM = "Custom"
 }
 
 export const categories = [
   {
-    name:  categoriesEnum.Birthday,
+    name: categoriesEnum.BIRTHDAY,
     description: 'Celebrate special moments with our birthday collection',
     image: 'https://images.pexels.com/photos/7100318/pexels-photo-7100318.jpeg'
-  },{
-    name: categoriesEnum.Wedding,
+  }, {
+    name: categoriesEnum.BIRTHDAY,
     description: 'Create unforgettable memories with our wedding cakes',
     image: 'https://images.pexels.com/photos/2038258/pexels-photo-2038258.jpeg'
-  },{
-    name: categoriesEnum.Anniversary,
+  }, {
+    name: categoriesEnum.ANNIVERSARY,
     description: 'Celebrate love and friendship with our anniversary cakes',
     image: 'https://images.pexels.com/photos/2144200/pexels-photo-2144200.jpeg'
-  },{
+  }, {
     name: categoriesEnum["Special Occasion"],
     description: 'Celebrate special occasions with our special occasion cakes',
     image: 'https://images.pexels.com/photos/33002841/pexels-photo-33002841.jpeg'
@@ -112,7 +116,6 @@ export const categories = [
 // https://images.pexels.com/photos/31336126/pexels-photo-31336126.jpeg
 // https://images.pexels.com/photos/17486826/pexels-photo-17486826.jpeg
 // https://images.pexels.com/photos/15147745/pexels-photo-15147745.jpeg
-// https://images.pexels.com/photos/20030868/pexels-photo-20030868.jpeg
 // https://images.pexels.com/photos/818789/pexels-photo-818789.jpeg
 // Sample data
 export const dummyCakes: Cake[] = [
@@ -123,20 +126,108 @@ export const dummyCakes: Cake[] = [
     price: 2499,
     category: categoriesEnum.Birthday,
     tags: ['Chocolate', 'Premium', 'Bestseller'],
-    images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+    images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
     featured: true,
     bestseller: true,
     inStock: true,
     deliveryTime: '2-3 hours',
     rating: 4.8,
-    reviews: 127
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      },
+      {
+        id: '3',
+        userId: '3',
+        userName: 'Bob Johnson',
+        cakeId: '1',
+        rating: 4.7,
+        comment: 'Great cake, but could use more berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      },
+      {
+        id: '4',
+        userId: '4',
+        userName: 'Alice Brown',
+        cakeId: '1',
+        rating: 4.6,
+        comment: 'Great cake, but could use more berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      },
+      {
+        id: '5',
+        userId: '5',
+        userName: 'Charlie Davis',
+        cakeId: '1',
+        rating: 4.9,
+        comment: 'Great cake, but could use more berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      },
+      {
+        id: '6',
+        userId: '6',
+        userName: 'Emily Wilson',
+        cakeId: '1',
+        rating: 4.7,
+        comment: 'Great cake, but could use more berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      },
+      {
+        id: '7',
+        userId: '7',
+        userName: 'Michael Johnson',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake, but could use more berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z',
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   },
   {
     id: '2',
     name: 'Red Velvet Supreme',
     description: 'Classic red velvet with cream cheese frosting and elegant decoration',
     price: 1899,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.BIRTHDAY,
     tags: ['Red Velvet', 'Classic', 'Eggless'],
     images: ['https://images.pexels.com/photos/19940993/pexels-photo-19940993.png'],
     featured: true,
@@ -144,14 +235,42 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.6,
-    reviews: 89
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   },
   {
     id: '3',
     name: 'Wedding Elegance',
     description: 'Three-tier wedding cake with white fondant and rose decorations',
     price: 8999,
-    category: categoriesEnum.Wedding,
+    category: categoriesEnum.WEDDING,
     tags: ['Wedding', 'Multi-tier', 'Fondant'],
     images: ['https://images.pexels.com/photos/9501651/pexels-photo-9501651.jpeg'],
     featured: false,
@@ -159,14 +278,42 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '24 hours',
     rating: 4.9,
-    reviews: 45
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   },
   {
     id: '4',
     name: 'Vanilla Bean Delight',
     description: 'Light vanilla sponge with fresh cream and seasonal fruits',
     price: 1599,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.BIRTHDAY,
     tags: ['Vanilla', 'Fresh Fruits', 'Light'],
     images: ['https://images.pexels.com/photos/697571/pexels-photo-697571.jpeg'],
     featured: false,
@@ -174,7 +321,35 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.5,
-    reviews: 156
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   },
   {
     id: '5',
@@ -189,13 +364,41 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '48 hours',
     rating: 4.9,
-    reviews: 73
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '6',
     name: 'Red Velvet Supreme',
     description: 'Classic red velvet with cream cheese frosting and elegant decoration',
     price: 1899,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.WEDDING,
     tags: ['Red Velvet', 'Classic', 'Eggless'],
     images: ['https://images.pexels.com/photos/19940993/pexels-photo-19940993.png'],
     featured: true,
@@ -203,14 +406,42 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.6,
-    reviews: 89
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   },
   {
     id: '7',
     name: 'Wedding Elegance',
     description: 'Three-tier wedding cake with white fondant and rose decorations',
     price: 8999,
-    category: categoriesEnum.Wedding,
+    category: categoriesEnum.ANNIVERSARY,
     tags: ['Wedding', 'Multi-tier', 'Fondant'],
     images: ['https://images.pexels.com/photos/9501651/pexels-photo-9501651.jpeg'],
     featured: false,
@@ -218,13 +449,41 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '24 hours',
     rating: 4.9,
-    reviews: 45
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '8',
     name: 'Vanilla Bean Delight',
     description: 'Light vanilla sponge with fresh cream and seasonal fruits',
     price: 1599,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.CUSTOM,
     tags: ['Vanilla', 'Fresh Fruits', 'Light'],
     images: ['https://images.pexels.com/photos/697571/pexels-photo-697571.jpeg'],
     featured: false,
@@ -232,8 +491,36 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.5,
-    reviews: 156
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '9',
     name: 'Custom Designer Cake',
     description: 'Personalized cake with your choice of design and flavors',
@@ -246,13 +533,41 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '48 hours',
     rating: 4.9,
-    reviews: 73
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '10',
     name: 'Red Velvet Supreme',
     description: 'Classic red velvet with cream cheese frosting and elegant decoration',
     price: 1899,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.ANNIVERSARY,
     tags: ['Red Velvet', 'Classic', 'Eggless'],
     images: ['https://images.pexels.com/photos/19940993/pexels-photo-19940993.png'],
     featured: true,
@@ -260,13 +575,41 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.6,
-    reviews: 89
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '11',
     name: 'Wedding Elegance',
     description: 'Three-tier wedding cake with white fondant and rose decorations',
     price: 8999,
-    category: categoriesEnum.Wedding,
+    category: categoriesEnum.WEDDING,
     tags: ['Wedding', 'Multi-tier', 'Fondant'],
     images: ['https://images.pexels.com/photos/9501651/pexels-photo-9501651.jpeg'],
     featured: false,
@@ -274,13 +617,41 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '24 hours',
     rating: 4.9,
-    reviews: 45
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '12',
     name: 'Vanilla Bean Delight',
     description: 'Light vanilla sponge with fresh cream and seasonal fruits',
     price: 1599,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.BIRTHDAY,
     tags: ['Vanilla', 'Fresh Fruits', 'Light'],
     images: ['https://images.pexels.com/photos/15147745/pexels-photo-15147745.jpeg'],
     featured: false,
@@ -288,8 +659,36 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.5,
-    reviews: 156
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '13',
     name: 'Custom Designer Cake',
     description: 'Personalized cake with your choice of design and flavors',
@@ -302,27 +701,83 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '48 hours',
     rating: 4.9,
-    reviews: 73
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '14',
     name: 'Red Velvet Supreme',
     description: 'Classic red velvet with cream cheese frosting and elegant decoration',
     price: 1899,
-    category: categoriesEnum.Birthday,
+    category: categoriesEnum.WEDDING,
     tags: ['Red Velvet', 'Classic', 'Eggless'],
-    images: ['https://images.pexels.com/photos/20030868/pexels-photo-20030868.jpeg'],
+    images: ['https://images.pexels.com/photos/1169790/pexels-photo-1169790.jpeg'],
     featured: true,
     bestseller: false,
     inStock: true,
     deliveryTime: '1-2 hours',
     rating: 4.6,
-    reviews: 89
-  },{
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg', "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
+  }, {
     id: '15',
     name: 'Wedding Elegance',
     description: 'Three-tier wedding cake with white fondant and rose decorations',
     price: 8999,
-    category: categoriesEnum.Wedding,
+    category: categoriesEnum.WEDDING,
     tags: ['Wedding', 'Multi-tier', 'Fondant'],
     images: ['https://images.pexels.com/photos/818789/pexels-photo-818789.jpeg'],
     featured: false,
@@ -330,7 +785,35 @@ export const dummyCakes: Cake[] = [
     inStock: true,
     deliveryTime: '24 hours',
     rating: 4.9,
-    reviews: 45
+    reviews: [
+      {
+        id: '1',
+        userId: '1',
+        userName: 'John Doe',
+        cakeId: '1',
+        rating: 4.8,
+        comment: 'Great cake! Loved the fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      },
+      {
+        id: '2',
+        userId: '2',
+        userName: 'Jane Smith',
+        cakeId: '1',
+        rating: 4.5,
+        comment: 'Delicious cake with fresh berries.',
+        images: ['https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg',"https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg"],
+        approved: true,
+        featured: false,
+        createdAt: '2023-06-01T10:00:00.000Z'
+      }
+    ],
+    deliveryInfo: 'Delivery available for the next 2 hours',
+    ingredients: ['Flour', 'Sugar', 'Egg', 'Butter', 'Vanilla Extract', 'Salt', 'Baking Powder'],
+    createdAt: '2023-06-01T10:00:00.000Z'
   }
 ];
 

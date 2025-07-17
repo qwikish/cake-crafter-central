@@ -11,7 +11,7 @@ interface CakeCardProps {
 
 const CakeCard = ({ cake }: CakeCardProps) => {
   return (
-    <Card className="card-product group">
+    <Card className="card-product group" key={cake.id}>
       <div className="relative overflow-hidden">
         <img
           src={cake.images[0]}
@@ -89,7 +89,7 @@ const CakeCard = ({ cake }: CakeCardProps) => {
             <div className="flex items-center space-x-1">
               <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
               <span className="font-medium">{cake.rating}</span>
-              <span className="text-muted-foreground">({cake.reviews})</span>
+              <span className="text-muted-foreground">({cake.reviews.length})</span>
             </div>
             <div className="flex items-center space-x-1 text-muted-foreground">
               <Clock className="h-3 w-3" />
