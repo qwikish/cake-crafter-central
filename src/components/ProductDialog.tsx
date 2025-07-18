@@ -135,7 +135,7 @@ export const ProductDialog = ({ open, onOpenChange, cake }: ProductDialogProps) 
                 ))}
               </div>
               <span className="text-sm text-muted-foreground">
-                {cake.rating} ({cake.reviews} reviews)
+                {cake.rating} ({cake.reviews.length} reviews)
               </span>
             </div>
 
